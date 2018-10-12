@@ -11,16 +11,6 @@
 
 <h1>Home</h1>
 <h3>Current Tasks:</h3>
-<table>
-<tr>
-	<th>Task Name</th>
-	<th>Due Date</th>
-	<th>Description</th>
-	<th>Urgency</th>
-	<th>Category</th>
-	<th></th>
-	<th></th>
-</tr>
 <% 
 	if (session.getAttribute("loggedIn") != null && session.getAttribute("loggedIn") != "") { 
 		
@@ -38,7 +28,23 @@
 		ResultSet rs = ps.executeQuery();
 		
 		while (rs.next()) {
-			check = true;
+			// Executes only once if resultset has rows (tasks)
+			if (check == false) {
+				%>
+				<table>
+				<tr>
+					<th>Task Name</th>
+					<th>Due Date</th>
+					<th>Description</th>
+					<th>Urgency</th>
+					<th>Category</th>
+					<th></th>
+					<th></th>
+				</tr>
+				<%
+				
+				check = true;
+			}
 			%>
 			<tr>
 				<td><%= rs.getObject("ta.TASK_NAME").toString() %></td>
@@ -50,11 +56,29 @@
 			<%
 		
 	} 
+	// Only executes if rows were returned / table was created earlier
+	if (check == true)	{
+		%>
+		</table>
+		<%
+	}
 	if (check == false) {
 		%>
 			<h4>No tasks found!</h4>
 		<%
 	}
+	
+	%>
+	
+	<form action="addTask.jsp" >
+		<input type="submit" value="Add Task" />
+	<br><br>
+	<form action="archive.jsp" >
+		<input type="submit" value="View Archive" />
+	</form>
+	
+	<%
+	
 	} else { 
 		response.sendRedirect("index.jsp");
 	}

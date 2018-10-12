@@ -20,7 +20,7 @@
 	</form>
 <% 
 	} else { 
-		response.sendRedirect("index.jsp");
+		response.sendRedirect("home.jsp");
 	}
 %>
 </body>
