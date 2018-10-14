@@ -22,7 +22,7 @@
 		<input type="text" name="duedate" />
 		<br><br>
 		<label for="urgency">Urgency (Currently Not Working):</label>
-		<input type=text" name="urgency" />
+		<input type="text" name="urgency" />
 		<br><br>
 		<input type="submit" value="Add Task" />
 	</form>

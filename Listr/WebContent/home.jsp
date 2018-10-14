@@ -18,10 +18,11 @@
 		boolean check = false;
 		
 		Connection connection = null;
-	
+		
 		Class.forName("com.mysql.jdbc.Driver");
 		connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/listr", "newremoteuser", "password");
-		String selectSQL = "SELECT * FROM task ta JOIN user_task ut ON ta.ID = ut.TASK_ID JOIN users us ON ut.USER_ID = us.ID JOIN category_ref cr ON ta.CATEGORY_ID = cr.ID WHERE us.USER_NAME = ?";
+		connection.setAutoCommit(true);
+		String selectSQL = "SELECT * FROM task ta JOIN user_task ut ON ta.ID = ut.TASK_ID JOIN users us ON ut.USER_ID = us.ID JOIN category_ref cr ON ta.CATEGORY_ID = cr.ID WHERE us.USER_NAME = ? AND ut.COMPLETED = 0";
 		String userName = session.getAttribute("user").toString();
 		PreparedStatement ps = connection.prepareStatement(selectSQL);
 		ps.setString(1, userName);
@@ -33,11 +34,11 @@
 				%>
 				<table>
 				<tr>
-					<th>Task Name</th>
-					<th>Due Date</th>
-					<th>Description</th>
-					<th>Urgency</th>
-					<th>Category</th>
+					<th align="left">Task Name</th>
+					<th align="left">Due Date</th>
+					<th align="left">Description</th>
+					<th align="left">Urgency</th>
+					<th align="left">Category</th>
 					<th></th>
 					<th></th>
 				</tr>
@@ -52,6 +53,8 @@
 				<td><%= rs.getObject("ta.DESCRIPTION").toString() %></td>
 				<td><%= rs.getObject("ta.URGENCY").toString() %></td>
 				<td><%= rs.getObject("cr.CATEGORY_DESCRIPTION").toString() %></td>
+				<td><form action="editTask.jsp" method="GET"><input type="hidden" name="task-id" value="<%= rs.getObject("ta.ID").toString() %>"><input type="submit" value="Edit" /></form></td>
+				<td><form action="deleteTask.jsp" method="POST"><input type="hidden" name="task-id" value="<%= rs.getObject("ta.ID").toString() %>"><input type="submit" value="Delete" /></form></td>
 			</tr>
 			<%
 		
@@ -69,10 +72,11 @@
 	}
 	
 	%>
-	
+	<br>
 	<form action="addTask.jsp" >
 		<input type="submit" value="Add Task" />
-	<br><br>
+	</form>
+	<br>
 	<form action="archive.jsp" >
 		<input type="submit" value="View Archive" />
 	</form>
@@ -83,6 +87,5 @@
 		response.sendRedirect("index.jsp");
 	}
 %>
-</table>
 </body>
 </html>
