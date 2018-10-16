@@ -20,7 +20,7 @@
 					<label for="username" >Desired Username: </label>
 					<input type="text" name="username" />				
 					<label for="password" >Desired Password: </label>
-					<input type="text" name="password" />								
+					<input type="password" name="password" />								
 					<button type="submit" value="Register" class="waves-effect waves-light btn">Register</button>
 					<a href="index.jsp" class="waves-effect waves-light btn">Home</a>
 				</form>											

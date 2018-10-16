@@ -21,7 +21,7 @@
 				<label for="username" >Username: </label>
 				<input type="text" name="username" />				
 				<label for="password" >Password: </label>
-				<input type="text" name="password" />
+				<input type="password" name="password" />
 				<button type="submit" value="Login" class="waves-effect waves-light btn">Login</button>
 				<a href="index.jsp" class="waves-effect waves-light btn">Home</a>
 			</form>		

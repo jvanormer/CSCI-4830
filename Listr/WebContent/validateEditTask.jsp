@@ -24,7 +24,7 @@
 		
 		// Completed
 		String completed = "0";
-		if (request.getParameter("completed").equals("1")) {
+		if (request.getParameter("completed") != null) {
 			completed = "1";	
 		}
 		

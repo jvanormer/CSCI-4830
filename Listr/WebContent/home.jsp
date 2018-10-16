@@ -32,7 +32,7 @@
 		Class.forName("com.mysql.jdbc.Driver");
 		connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/listr", "newremoteuser", "password");
 		connection.setAutoCommit(true);
-		String selectSQL = "SELECT * FROM task ta JOIN user_task ut ON ta.ID = ut.TASK_ID JOIN users us ON ut.USER_ID = us.ID JOIN category_ref cr ON ta.CATEGORY_ID = cr.ID WHERE us.USER_NAME = ? AND ut.COMPLETED = 0";
+		String selectSQL = "SELECT * FROM task ta JOIN user_task ut ON ta.ID = ut.TASK_ID JOIN users us ON ut.USER_ID = us.ID LEFT JOIN category_ref cr ON ta.CATEGORY_ID = cr.ID WHERE us.USER_NAME = ? AND ut.COMPLETED = 0";
 		String userName = session.getAttribute("user").toString();
 		PreparedStatement ps = connection.prepareStatement(selectSQL);
 		ps.setString(1, userName);
@@ -54,9 +54,6 @@
 						<div class="row">
 							<div class="col">
 								<form action="editTask.jsp" method="GET"><input type="hidden" name="task-id" value="<%= rs.getObject("ta.ID").toString() %>"><button type="submit" value="Edit" class="btn orange darken-4 waves-effect waves-orange">Edit</button></form>	
-							</div>
-							<div class="col">
-								<form action="deleteTask.jsp" method="POST"><input type="hidden" name="task-id" value="<%= rs.getObject("ta.ID").toString() %>"><button type="submit" value="Delete" class="btn red darken-2 waves-effect waves-red">Delete</button></form>	
 							</div>
 						</div>																
 					</div>
