@@ -5,19 +5,31 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Home</title>
+	<!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <style>
+        	
+    </style>
 </head>
-<body>
+<body class="blue-grey darken-2">
 <% 
 	if (session.getAttribute("loggedIn") == null || session.getAttribute("loggedIn") == "") { 
 %>
-	<h1>Welcome to Listr</h1>
-	<form action="login.jsp">
-		<input type="submit" value="Log In" />
-	</form>
-	<br>
-	<form action="register.jsp">
-		<input type="submit" value="Register" />
-	</form>
+
+<div class="container">	
+	<div class="card blue-grey darken-1 center-align">
+		<div class="card-content white-text">
+			<span class="card-title"><h2>Welcome to Listr</h2></span>														
+		</div>		
+		<div class="card-action">			
+			<a href="login.jsp" class="waves-effect waves-light btn">Log In</a>											
+			<a href="register.jsp" class="waves-effect waves-light btn">Register</a>				
+		</div>				
+	</div>
+</div>
 <% 
 	} else { 
 		response.sendRedirect("home.jsp");

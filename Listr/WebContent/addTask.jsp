@@ -5,31 +5,35 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Add Task</title>
+	<!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 </head>
-<body>
+<body class="blue-grey darken-2">
 <% 
 	if (session.getAttribute("loggedIn") != null && session.getAttribute("loggedIn") != "") { 
 %>
-	
-	<form action="validateAddTask.jsp" method="POST">
-		<label for="taskname">Task Name:</label>
-		<input type="text" name="taskname" />
-		<br><br>
-		<label for="description">Description:</label>
-		<input type="text" name="description" />
-		<br><br>
-		<label for="duedate">Due Date (Currently Not Working):</label>
-		<input type="text" name="duedate" />
-		<br><br>
-		<label for="urgency">Urgency (Currently Not Working):</label>
-		<input type="text" name="urgency" />
-		<br><br>
-		<input type="submit" value="Add Task" />
-	</form>
-	<br>
-	<form action="home.jsp">
-		<input type="submit" value="Back to Home" />
-	</form>
+<div class="container">
+	<div class="card blue-grey darken-1">
+		<div class="card-content white-text">
+			<span class="card-title"><h2>Add Task</h2></span>
+			<form action="validateAddTask.jsp" method="POST">
+				<label for="taskname">Task Name:</label>
+				<input type="text" name="taskname" />				
+				<label for="description">Description:</label>
+				<input type="text" name="description" />				
+				<label for="duedate">Due Date (Currently Not Working):</label>
+				<input type="text" name="duedate" />				
+				<label for="urgency">Urgency (Currently Not Working):</label>
+				<input type="text" name="urgency" />				
+				<button type="submit" value="Add Task" class="waves-effect waves-light btn">Add Task</button>
+				<a href="home.jsp" class="waves-effect waves-light btn">Home</a>
+			</form>
+		</div>
+	</div>
+</div>		
 			
 <%
 	} else { 

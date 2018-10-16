@@ -41,7 +41,7 @@
 			String insertSQL = "INSERT INTO task (DUE_DATE, CREATE_DATE, CATEGORY_ID, DESCRIPTION, URGENCY, TASK_NAME) "
 					+ "VALUES (CURDATE()+7, CURDATE(), 1, ?, 1, ?);";
 			String insertSQL2 = "INSERT INTO user_task (TASK_ID, USER_ID, COMPLETED, STATUS) "
-					+ "VALUES (LAST_INSERT_ID(), ?, false, 1);";
+					+ "VALUES (LAST_INSERT_ID(), ?, 0, 1);";
 			PreparedStatement ps2 = connection.prepareStatement(insertSQL);
 			PreparedStatement ps3 = connection.prepareStatement(insertSQL2);
 			connection.setAutoCommit(false);

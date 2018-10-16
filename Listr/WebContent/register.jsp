@@ -5,23 +5,27 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Register</title>
+	<!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 </head>
-<body>
-	<h1>Register</h1>
-	<form action="validateRegistration.jsp" method="GET">
-		<label for="username" >Desired Username: </label>
-		<input type="text" name="username" />
-		<br>
-		<br>
-		<label for="password" >Desired Password: </label>
-		<input type="text" name="password" />
-		<br>
-		<br>
-		<input type="submit" value="Register" />
-	</form>
-	<br>
-	<form action="index.jsp" >
-		<input type="submit" value="Home" />
-	</form>
+<body class="blue-grey darken-2">
+	<div class="container">
+		<div class="card blue-grey darken-1">
+			<div class="card-content white-text">
+				<span class="card-title"><h2>Register</h2></span>			
+				<form action="validateRegistration.jsp" method="GET">
+					<label for="username" >Desired Username: </label>
+					<input type="text" name="username" />				
+					<label for="password" >Desired Password: </label>
+					<input type="text" name="password" />								
+					<button type="submit" value="Register" class="waves-effect waves-light btn">Register</button>
+					<a href="index.jsp" class="waves-effect waves-light btn">Home</a>
+				</form>											
+			</div>		
+		</div>			
+	</div>
 </body>
 </html>
