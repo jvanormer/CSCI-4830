@@ -6,9 +6,14 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Listr - Edit Task</title>
+	<!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 </head>
-<body>
-<h1>Edit Task</h1>
+<body class="blue-grey darken-2">
+<div class="container">
 <% 
 	if (session.getAttribute("loggedIn") != null && session.getAttribute("loggedIn") != "" && request.getParameter("task-id") != null) { 
 		Connection connection = null;
@@ -26,31 +31,38 @@
 		while (rs.next()) {
 			// Executes only once if resultset has rows (tasks)
 			%>
+	<div class="card blue-grey darken-1">
+		<div class="card-content white-text">
+			<span class="card-title"><h2>Edit Task</h2></span>
 			<form action="validateEditTask.jsp" method="GET">
 				<input type="hidden" name="task-id" value="<%= request.getParameter("task-id").toString() %>">
 				<label for="taskname">Task Name:</label>
 				<input value="<%= rs.getObject("TASK_NAME").toString() %>" type="text" name="taskname" />
-				<br><br>
 				<label for="description">Description:</label>
-				<input value="<%= rs.getObject("DESCRIPTION").toString() %>" type="text" name="description" />
-				<br><br>
+				<input value="<%= rs.getObject("DESCRIPTION").toString() %>" type="text" name="description" />				
 				<label for="duedate">Due Date (Currently Not Working):</label>
 				<input value="<%= rs.getObject("DUE_DATE").toString() %>" type="text" name="duedate" />
-				<br><br>
 				<label for="urgency">Urgency (Currently Not Working):</label>
-				<input value="<%= rs.getObject("URGENCY").toString() %>" type="text" name="urgency" />
-				<br><br>
-				<label for="completed">Completed</label>
-				<input type="checkbox" name="completed" value="1" />
-				<br><br>
-				<input type="submit" value="Save Changes" />
+				<input value="<%= rs.getObject("URGENCY").toString() %>" type="text" name="urgency" />							
+				<p>
+					<label>
+						<input type="checkbox" name="completed" value="1" />
+						<span>Completed</span>
+					</label>
+				</p>
+				<br>
+				<button type="submit" value="Save Changes" class="waves-effect waves-light btn">Save Changes</button>
+				<a href="home.jsp" class="waves-effect waves-light btn">Home</a>
 			</form>
-			<%
+		</div>
+	</div>					
+<%
 		}
 	} 
 	else { 
 		response.sendRedirect("index.jsp");
 	}
 %>
+</div>
 </body>
 </html>
