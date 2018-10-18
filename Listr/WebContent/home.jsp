@@ -22,6 +22,7 @@
 			<span class="card-title"><h2>Current Tasks</h2></span>
 			<a title="Add Task" href="addTask.jsp" class="btn-floating btn-large waves-effect waves-light btn"><i class="material-icons">add</i></a>
 			<a title="View Archive" href="archive.jsp" class="btn-floating btn-large waves-effect waves-light btn"><i class="material-icons">archive</i></a>
+			<a title="Logout" href="validateLogout.jsp" class="btn-floating btn-large waves-effect waves-light btn"><i class="material-icons">logout</i></a>
 <% 
 	if (session.getAttribute("loggedIn") != null && session.getAttribute("loggedIn") != "") { 
 		
