@@ -50,6 +50,13 @@
 					<p><%= rs.getObject("ta.DESCRIPTION").toString() %></p>
 					<p>Due: <%= rs.getObject("ta.DUE_DATE").toString() %></p>
 					<p>Urgency: <%= rs.getObject("ta.URGENCY").toString() %></p>
+					<div class="card-action">
+						<div class="row">
+							<div class="col">
+								<form action="deleteTask.jsp" method="POST"><input type="hidden" name="task-id" value="<%= rs.getObject("ta.ID").toString() %>"><button type="submit" value="Delete" class="btn orange darken-4 waves-effect waves-orange">Delete</button></form>	
+							</div>
+						</div>																
+					</div>
 				</div>
 			</div>
 			<!-- Task -->	

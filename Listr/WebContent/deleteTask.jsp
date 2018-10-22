@@ -12,13 +12,7 @@
 	if (session.getAttribute("loggedIn") != null && session.getAttribute("loggedIn") != "") { 
 		
 		// Task Name
-		String taskname = request.getParameter("taskname");
-		// Description
-		String description = request.getParameter("description");
-		// Due Date
-		String duedate = request.getParameter("duedate");
-		// Urgency
-		String urgency = request.getParameter("urgency");
+		String taskID = request.getParameter("task-id");
 		// User Name of submitting user
 		String userName = session.getAttribute("user").toString();
 		
@@ -36,25 +30,16 @@
 		
 		if (rs.next()) {
 			userId = rs.getString("ID");
-			connection.setAutoCommit(false);
+			connection.setAutoCommit(true);
 			
-			String insertSQL = "INSERT INTO task (DUE_DATE, CREATE_DATE, CATEGORY_ID, DESCRIPTION, URGENCY, TASK_NAME) "
-					+ "VALUES (CURDATE()+7, CURDATE(), 1, ?, 1, ?);";
-			String insertSQL2 = "INSERT INTO user_task (TASK_ID, USER_ID, COMPLETED, STATUS) "
-					+ "VALUES (LAST_INSERT_ID(), ?, false, 1);";
-			PreparedStatement ps2 = connection.prepareStatement(insertSQL);
-			PreparedStatement ps3 = connection.prepareStatement(insertSQL2);
-			connection.setAutoCommit(false);
-			ps2.setString(1, description);
-			ps2.setString(2, taskname);
-			ps3.setString(1, userId);
+			String deleteSQL = "DELETE FROM user_task WHERE USER_ID = ? AND TASK_ID = ?";
+			PreparedStatement ps2 = connection.prepareStatement(deleteSQL);
+			ps2.setString(1, userId);
+			ps2.setString(2, taskID);
 			
 			ps2.executeUpdate();
-			ps3.executeUpdate();
 			
-			connection.commit();
-			
-			response.sendRedirect("home.jsp");
+			response.sendRedirect("archive.jsp");
 			}
 		else {
 			%>
