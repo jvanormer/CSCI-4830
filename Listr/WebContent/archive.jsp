@@ -21,6 +21,7 @@
 		<div class="card-content white-text">
 			<span class="card-title"><h2>Archive</h2></span>
 			<a title="Current Tasks" href="home.jsp" class="btn-floating btn-large waves-effect waves-light btn"><i class="material-icons">arrow_back</i></a>
+			<a title="Logout" href="validateLogout.jsp" class="btn-floating btn-large waves-effect waves-light btn"><i class="material-icons">logout</i></a>
 <% 
 	if (session.getAttribute("loggedIn") != null && session.getAttribute("loggedIn") != "") { 
 		
