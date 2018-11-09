@@ -1,6 +1,9 @@
 package listr;
 import java.sql.*;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+
+import com.sun.org.apache.xerces.internal.impl.xpath.regex.ParseException;
 
 public class DatabaseManager {
 	String SQLUSER = "newremoteuser";
@@ -40,12 +43,12 @@ public class DatabaseManager {
 		return tasks;			
 	}
 	
-	//Public-facing method that gets active tasks by user
+	// Public-facing method that gets active tasks by user
 	public ArrayList<ListrTask> getActiveTasksForUser(String userName){
 		return getTasksForUser(userName, 0);
 	}
 	
-	//Public-facing method that gets completed tasks by user
+	// Public-facing method that gets completed tasks by user
 	public ArrayList<ListrTask> getArchivedTasksForUser(String userName){
 		return getTasksForUser(userName, 1);
 	}
@@ -117,6 +120,20 @@ public class DatabaseManager {
 		
 		return success;
 		
+	}
+	
+	public String parseDate(String duedate) {
+		SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
+
+	    try {
+	        java.util.Date utilDate = format.parse("dd/mm/yyyy");
+	        java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
+	        return sqlDate.toString();
+	    } catch (java.text.ParseException e) {
+			e.printStackTrace();
+		}
+	    
+	    return null;
 	}
 	
 	//Returns true if a username and password pair exist for the parameters
@@ -210,7 +227,88 @@ public class DatabaseManager {
 		return userId;
 	}
 	
-	//Converts a resultset to task object
+	// Checks to make sure the correct previous passw0rd was given and once confirmed changes the user's password.
+	public boolean changePassword(String userName, String oldPassword, String password) {
+		String selectSQL = "SELECT USER_NAME FROM users WHERE USER_NAME = ? AND PASSWORD = ?";
+		
+		try {
+			PreparedStatement ps = connection.prepareStatement(selectSQL);
+			ps.setString(1, userName);
+			ps.setString(2, oldPassword);
+			ResultSet rs = ps.executeQuery();
+			if (rs.next()) {
+				String updateSQL = "UPDATE users SET PASSWORD = ? WHERE USER_NAME = ?";
+				
+				PreparedStatement ps2 = connection.prepareStatement(updateSQL);
+				ps2.setString(1, password);
+				ps2.setString(2, userName);
+				
+				ps2.executeUpdate();
+				
+				return true;
+			}
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
+	public boolean shareTask(String userName, String taskID) {
+		try {
+			String userID = String.valueOf(getUserIdFromName(userName));
+			
+			String insertSQL = "INSERT INTO user_task (TASK_ID, USER_ID, COMPLETED, STATUS) "
+					+ "VALUES (?, ?, 0, 1);";
+			
+			PreparedStatement ps = connection.prepareStatement(insertSQL);
+			ps.setString(1, taskID);
+			ps.setString(2, userID);
+			
+			ps.executeUpdate();
+			
+			return true;
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
+	public boolean deleteAccount(String userName, String password) {
+		String selectSQL = "SELECT USER_NAME FROM users WHERE ID = ? AND PASSWORD = ?";
+		String userID = String.valueOf(getUserIdFromName(userName));
+		
+		try {
+			PreparedStatement ps = connection.prepareStatement(selectSQL);
+			ps.setString(1, userID);
+			ps.setString(2, password);
+			ResultSet rs = ps.executeQuery();
+			if (rs.next()) {
+				String updateSQL = "DELETE FROM users WHERE ID = ?";
+				
+				PreparedStatement ps2 = connection.prepareStatement(updateSQL);
+				ps2.setString(1, userID);
+				
+				ps2.executeUpdate();
+				
+				String updateSQL2 = "DELETE FROM user_task WHERE USER_ID = ?";
+				
+				PreparedStatement ps3 = connection.prepareStatement(updateSQL2);
+				ps3.setString(1, userID);
+				
+				ps3.executeUpdate();
+				
+				return true;
+			}
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
+	// Converts a resultset to task object
 	private ListrTask queryTask(ResultSet rs) throws Exception {
 		ListrTask task = new ListrTask();
 		//task

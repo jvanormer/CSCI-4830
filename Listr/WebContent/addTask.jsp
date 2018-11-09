@@ -20,7 +20,7 @@
 				<input type="text" name="taskname" />				
 				<label for="description">Description:</label>
 				<input type="text" name="description" />				
-				<label for="duedate">Due Date (Currently Not Working):</label>
+				<label for="duedate">Due Date (DD/MM/YYYY):</label>
 				<input type="text" name="duedate" />				
 				<label for="urgency">Urgency (Currently Not Working):</label>
 				<input type="text" name="urgency" />				

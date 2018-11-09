@@ -42,6 +42,11 @@
 									<button type="submit" value="Delete" class="btn orange darken-4 waves-effect waves-orange">Delete</button>
 								</form>	
 							</div>
+							<div class="col">
+								<form action="unarchiveTask.jsp" method="POST"><input type="hidden" name="task-id" value="<%= task.getId() %>">
+									<button type="submit" value="Unarchive" class="btn yellow darken-4 waves-effect waves-yellow">Unarchive</button>
+								</form>	
+							</div>
 						</div>																
 					</div>
 				</div>

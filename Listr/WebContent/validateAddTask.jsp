@@ -18,8 +18,10 @@
 		ListrTask task = new ListrTask();
 		task.setTaskName(request.getParameter("taskname"));						// Task Name
 		task.setDescription(request.getParameter("description")); 				// Description				
-		//String duedate = request.getParameter("duedate"); 					// Due Date		
-		task.setUrgency(Integer.parseInt(request.getParameter("urgency")));		// Urgency		
+		//task.setDueDate(dm.parseDate(request.getParameter("duedate"))); 					// Due Date		
+		
+		
+		//task.setUrgency(Integer.parseInt(request.getParameter("urgency")));		// Urgency		
 		
 		String userName = session.getAttribute("user").toString(); 				// User Name of submitting user							
 		int userId = dm.getUserIdFromName(userName);							// User ID of submitting user

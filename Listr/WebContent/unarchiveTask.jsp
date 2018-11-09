@@ -6,7 +6,7 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-	<title>Listr - Delete Task</title>
+	<title>Listr - Unarchive Task</title>
 	<%@ include file="/WEB-INF/jspf/css.jspf" %>
 </head>
 <body>
@@ -16,12 +16,14 @@
 		int taskId = Integer.parseInt(request.getParameter("task-id"));
 		String userName = session.getAttribute("user").toString();		
 		DatabaseManager dm = new DatabaseManager();
-		if (dm.deleteTaskForUser(userName, taskId)){
+		ListrTask task = dm.getTaskById(taskId);
+		task.setCompleted(0);
+		if (dm.updateTaskForUser(task, dm.getUserIdFromName(userName))) {
 			response.sendRedirect("archive.jsp");
 		}
 		else{		
 %>
-			<p style="color: red">ERROR: Add Task Failed. Please Try Again.</p>
+			<p style="color: red">ERROR: Unarchive Failed. Please Try Again.</p>
 			<form action="home.jsp">
 				<input type="submit" value="Return Home" />
 			</form>
