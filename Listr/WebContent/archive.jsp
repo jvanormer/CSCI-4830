@@ -21,7 +21,7 @@
 	if (session.getAttribute("loggedIn") != null && session.getAttribute("loggedIn") != "") { 		
 		DatabaseManager dm = new DatabaseManager();
 		String userName = session.getAttribute("user").toString();
-		ArrayList<ListrTask> tasks = dm.getArchivedTasksForUser(userName);
+		ArrayList<ListrTask> tasks = dm.getArchivedTasksForUser(userName, "dueDate-asc");
 		
 		boolean empty = true;
 		for (ListrTask task : tasks){

@@ -1,5 +1,6 @@
 package listr;
 import java.sql.*;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
@@ -23,9 +24,35 @@ public class DatabaseManager {
 	}
 	
 	//Generic method that gets tasks by username and completion status
-	private ArrayList<ListrTask> getTasksForUser(String userName, int completed) {
+	private ArrayList<ListrTask> getTasksForUser(String userName, int completed, String sortOrder) {
+		String sort;
+		
+		switch(sortOrder) {
+			case "task-asc":
+				sort = "ta.TASK_NAME asc";
+				break;
+			case "task-desc":
+				sort = "ta.TASK_NAME desc";
+				break;
+			case "createDate-asc":
+				sort = "ta.CREATE_DATE asc";
+				break;
+			case "createDate-desc":
+				sort = "ta.CREATE_DATE desc";
+				break;
+			case "dueDate-asc":
+				sort = "ta.DUE_DATE asc";
+				break;
+			case "dueDate-desc":
+				sort = "ta.DUE_DATE desc";
+				break;
+			default:
+				sort = "ta.DUE_DATE asc";
+				break;
+		}
+		
 		ArrayList<ListrTask> tasks = new ArrayList<ListrTask>();
-		String selectSQL = "SELECT * FROM task ta JOIN user_task ut ON ta.ID = ut.TASK_ID JOIN users us ON ut.USER_ID = us.ID LEFT JOIN category_ref cr ON ta.CATEGORY_ID = cr.ID WHERE us.USER_NAME = ? AND ut.COMPLETED = ? ";
+		String selectSQL = "SELECT * FROM task ta JOIN user_task ut ON ta.ID = ut.TASK_ID JOIN users us ON ut.USER_ID = us.ID LEFT JOIN category_ref cr ON ta.CATEGORY_ID = cr.ID WHERE us.USER_NAME = ? AND ut.COMPLETED = ? ORDER BY " + sort;
 		try {
 			PreparedStatement ps = connection.prepareStatement(selectSQL);
 			ps.setString(1, userName);
@@ -44,13 +71,13 @@ public class DatabaseManager {
 	}
 	
 	// Public-facing method that gets active tasks by user
-	public ArrayList<ListrTask> getActiveTasksForUser(String userName){
-		return getTasksForUser(userName, 0);
+	public ArrayList<ListrTask> getActiveTasksForUser(String userName, String sort){
+		return getTasksForUser(userName, 0, sort);
 	}
 	
 	// Public-facing method that gets completed tasks by user
-	public ArrayList<ListrTask> getArchivedTasksForUser(String userName){
-		return getTasksForUser(userName, 1);
+	public ArrayList<ListrTask> getArchivedTasksForUser(String userName, String sort){
+		return getTasksForUser(userName, 1, sort);
 	}
 	
 	//TODO: Might be worth taking a look at the SQL in this one, Teagon
@@ -122,14 +149,11 @@ public class DatabaseManager {
 		
 	}
 	
-	public String parseDate(String duedate) {
-		SimpleDateFormat format = new SimpleDateFormat("yyyy/MM/dd");
-
+	public Date parseDate(java.util.Date d) {
 	    try {
-	        java.util.Date utilDate = format.parse("dd/mm/yyyy");
-	        java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
-	        return sqlDate.toString();
-	    } catch (java.text.ParseException e) {
+	    	Date myDate = new java.sql.Date(d.getTime());
+	    	return myDate;
+	    } catch (Exception e) {
 			e.printStackTrace();
 		}
 	    
@@ -156,17 +180,20 @@ public class DatabaseManager {
 	//Allows adding a new task to a user
 	//TODO: THIS WILL NEED CHANGES TO REFLECT ADDITION OF DATE FUNCTIONALITY
 	public boolean addTaskForUser(ListrTask task, int userId) {
+		Date dateFormatted = parseDate(task.dueDate);
 		boolean success = false;
 		String insertSQL = "INSERT INTO task (DUE_DATE, CREATE_DATE, CATEGORY_ID, DESCRIPTION, URGENCY, TASK_NAME) "
-				+ "VALUES (CURDATE()+7, CURDATE(), 1, ?, 1, ?);";
+				+ "VALUES (?, CURDATE(), 1, ?, ?, ?);";
 		
 		String insertSQL2 = "INSERT INTO user_task (TASK_ID, USER_ID, COMPLETED, STATUS) "
 				+ "VALUES (LAST_INSERT_ID(), ?, 0, 1);";
 		
 		try {
 			PreparedStatement ps = connection.prepareStatement(insertSQL);
-			ps.setString(1, task.getDescription());
-			ps.setString(2, task.getTaskName());
+			ps.setDate(1, dateFormatted);
+			ps.setString(2, task.getDescription());
+			ps.setInt(3, task.getUrgency());
+			ps.setString(4, task.getTaskName());
 			PreparedStatement ps2 = connection.prepareStatement(insertSQL2);
 			ps2.setInt(1, userId);
 			ps.executeUpdate();

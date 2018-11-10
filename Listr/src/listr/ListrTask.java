@@ -33,6 +33,20 @@ public class ListrTask {
 	public int getUrgency() {
 		return urgency;
 	}
+	
+	public String getUrgencyString() {
+		switch (urgency) {
+			case 1:
+				return "high";
+			case 2:
+				return "medium";
+			case 3:
+				return "low";
+			default:
+				return "medium";
+		}
+	}
+	
 	public void setUrgency(int urgency) {
 		this.urgency = urgency;
 	}

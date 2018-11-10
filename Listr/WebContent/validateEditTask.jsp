@@ -1,4 +1,6 @@
 <%@ page import="java.sql.*" %>
+<%@ page import="java.util.Date" %>
+<%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="listr.*" %>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
@@ -17,9 +19,20 @@
 		ListrTask task = new ListrTask();
 		task.setTaskName(request.getParameter("taskname"));						// Task Name
 		task.setDescription(request.getParameter("description"));				// Description
-		//task.setDueDate()
-		//String duedate = request.getParameter("duedate");						// Due Date
-		task.setUrgency(Integer.parseInt(request.getParameter("urgency")));		// Urgency
+		String dueDateString = request.getParameter("duedate");
+		Date dueDate = null;
+		
+		try {
+			dueDate = new SimpleDateFormat("yyyy-MM-dd").parse(dueDateString);
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		task.setDueDate(dueDate); 					// Due Date		
+		
+		
+		task.setUrgency(Integer.parseInt(request.getParameter("urgency")));		// Urgency	
 		task.setId(Integer.parseInt(request.getParameter("task-id")));			// Task ID			
 		
 		int completed = 0;
