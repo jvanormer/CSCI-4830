@@ -22,7 +22,7 @@
 				<h5 style="font-weight:bolder">WARNING: THIS ACTION CANNOT BE DONE</h5>	
 				<form action="validateDeleteAccount.jsp" method="POST">
 					<label for="password" >Enter Password to Confirm Deletion: </label>
-					<input type="text" name="password" />							
+					<input type="password" name="password" />							
 					<button type="submit" value="Delete" class="waves-effect waves-light btn">Delete Account</button>
 					<a href="home.jsp" class="waves-effect waves-light btn">Go Back</a>
 				</form>											
