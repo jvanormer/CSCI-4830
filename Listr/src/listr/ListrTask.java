@@ -37,13 +37,13 @@ public class ListrTask {
 	public String getUrgencyString() {
 		switch (urgency) {
 			case 1:
-				return "high";
+				return "High";
 			case 2:
-				return "medium";
+				return "Medium";
 			case 3:
-				return "low";
+				return "Low";
 			default:
-				return "medium";
+				return "Medium";
 		}
 	}
 	

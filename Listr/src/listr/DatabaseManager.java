@@ -46,6 +46,12 @@ public class DatabaseManager {
 			case "dueDate-desc":
 				sort = "ta.DUE_DATE desc";
 				break;
+			case "urgency-asc":
+				sort = "ta.URGENCY asc";
+				break;
+			case "urgency-desc":
+				sort = "ta.URGENCY desc";
+				break;
 			default:
 				sort = "ta.DUE_DATE asc";
 				break;
@@ -274,6 +280,26 @@ public class DatabaseManager {
 				
 				return true;
 			}
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
+	public boolean markComplete(String taskID, String userName) {
+		try {
+			String userID = String.valueOf(getUserIdFromName(userName));
+			
+			String insertSQL = "UPDATE user_task SET COMPLETED = 1 WHERE TASK_ID = ? AND USER_ID = ?;";
+			
+			PreparedStatement ps = connection.prepareStatement(insertSQL);
+			ps.setString(1, taskID);
+			ps.setString(2, userID);
+			
+			ps.executeUpdate();
+			
+			return true;
 		}
 		catch (Exception e) {
 			e.printStackTrace();

@@ -36,6 +36,8 @@
 			                  <option value = "createDate-desc">Create Date - Descending</option>
 			                  <option value = "dueDate-asc">Due Date - Ascending</option>
 			                  <option value = "dueDate-desc">Due Date - Descending</option>
+			                  <option value = "urgency-asc">Urgency - High to Low</option>
+			                  <option value = "urgency-desc">Urgency - Low to High</option>
 			               </select>
 			            </div>
 			            <div class="col"> 
@@ -85,6 +87,12 @@
 								<form action="shareTask.jsp" method="POST">
 									<input type="hidden" name="task-id" value="<%= task.getId() %>">
 									<button type="submit" value="Share" class="btn green darken-4 waves-effect waves-green">Share</button>
+								</form>	
+							</div>
+							<div class="col">
+								<form action="markComplete.jsp" method="POST">
+									<input type="hidden" name="task-id" value="<%= task.getId() %>">
+									<button type="submit" value="Mark Complete" class="btn red darken-4 waves-effect waves-red">Mark Complete</button>
 								</form>	
 							</div>
 						</div>																
