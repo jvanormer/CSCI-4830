@@ -56,7 +56,7 @@
 		
 		DatabaseManager dm = new DatabaseManager();
 		String userName = session.getAttribute("user").toString();
-		ArrayList<ListrTask> tasks = dm.getActiveTasksForUser(userName, sort);
+		ArrayList<ListrTask> tasks = dm.getArchivedTasksForUser(userName, sort);
 		
 		boolean empty = true;
 		for (ListrTask task : tasks){
