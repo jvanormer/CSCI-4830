@@ -27,7 +27,7 @@
 		<div class="card blue-grey darken-1">
 			<div class="card-content white-text">
 				<span class="card-title"><h2>Edit Task</h2></span>
-				<form action="validateEditTask.jsp" method="GET">
+				<form action="validateEditTask.jsp" method="POST">
 					<input type="hidden" name="task-id" value="<%= task.getId() %>">
 					<label for="taskname">Task Name:</label>
 					<input value="<%= task.getTaskName() %>" type="text" name="taskname" />

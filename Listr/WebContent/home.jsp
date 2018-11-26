@@ -25,7 +25,7 @@
 		<div class="card-content white-text">
 			<span class="card-title"><h2>Current Tasks</h2></span>
 			<span class="card-title">
-				<form action="home.jsp" method="GET">
+				<form action="home.jsp" method="POST">
 					<div class="row">
 						<div class="col">
 							<select name="sort">

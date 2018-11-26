@@ -19,7 +19,7 @@
 		<div class="card blue-grey darken-1">
 			<div class="card-content white-text">
 				<span class="card-title"><h2>Change Password</h2></span>			
-				<form action="validateChangePassword.jsp" method="GET">
+				<form action="validateChangePassword.jsp" method="POST">
 					<label for="oldPassword" >Old Password: </label>
 					<input type="text" name="oldPassword" />				
 					<label for="password" >Desired Password: </label>

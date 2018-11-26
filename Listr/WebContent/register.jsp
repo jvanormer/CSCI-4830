@@ -12,7 +12,7 @@
 		<div class="card blue-grey darken-1">
 			<div class="card-content white-text">
 				<span class="card-title"><h2>Register</h2></span>			
-				<form action="validateRegistration.jsp" method="GET">
+				<form action="validateRegistration.jsp" method="POST">
 					<label for="username" >Desired Username: </label>
 					<input type="text" name="username" />				
 					<label for="password" >Desired Password: </label>
